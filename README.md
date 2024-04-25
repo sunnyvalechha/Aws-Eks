@@ -63,6 +63,16 @@ If having multiple cluster
 
     aws eks update-kubeconfig --name <cluster-name> --region us-east-1
 
+# EKS Concepts 
+
+**EKS Storage**
+
+1. EBS CSI Driver: The Amazon Elastic Block Store (Amazon EBS) Container Storage Interface (CSI) driver manages the lifecycle of Amazon EBS volumes as storage for the Kubernetes Volumes that you create. The Amazon EBS CSI driver makes Amazon EBS volumes for these types of Kubernetes volumes: generic ephemeral volumes and persistent volumes.
+   
+2. EFS CSI Driver: Amazon Elastic File System (Amazon EFS) provides serverless, fully elastic file storage so that you can share file data without provisioning or managing storage capacity and performance. The Amazon EFS Container Storage Interface (CSI) driver provides a CSI interface that allows Kubernetes clusters running on AWS to manage the lifecycle of Amazon EFS file systems.
+  
+3. Amazon FSx for Lustre CSI driver: 
+
     
 
 
