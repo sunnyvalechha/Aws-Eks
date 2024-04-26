@@ -85,6 +85,14 @@ https://github.com/stacksimplify/kubernetes-fundamentals
             We can even create, autoscale and delete node groups.
             We can even create fargate profiles using eksctl
 
+**AWS EKS - Core Objects**
+
+EKS Cluster has four major parts:
+
+1. EKS Control Plane: Contains Kubernetes master components like etcd, kube-apiserver, kube-controller. It is managed service by AWS.
+2. Worker Nodes & Node Groups: Group of EC2 instance where we run our application workloads.
+3. Fargate Profiles (Serverless): Instead of Ec2 instance, we run our application workloads on Serverless Fargate profiles.
+4. VPC: With Vpc we follow secure networking standards which will allow us to run production workloads on EKS.
 
 
 
