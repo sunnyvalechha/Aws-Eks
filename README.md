@@ -63,6 +63,39 @@ If having multiple cluster
 
     aws eks update-kubeconfig --name <cluster-name> --region us-east-1
 
+
+
+# Elastic Kubernetes Services Full Course
+
+**GitHub Repos:**
+
+https://github.com/stacksimplify/aws-eks-kubernetes-masterclass
+
+https://github.com/stacksimplify/docker-fundamentals
+
+https://github.com/stacksimplify/kubernetes-fundamentals
+
+**Aws EKS Cluster - CLI's**
+
+3 Types of CLI's
+
+1. AWS CLI - We can control multiple AWS services from the command line and automate them through scripts.
+2. kubectl - We can control kubernetes clusters and objects using kubectl
+3. eksctl - Used for creating & deleting clusters on Aws EKS.
+            We can even create, autoscale and delete node groups.
+            We can even create fargate profiles using eksctl
+
+
+
+
+
+
+
+
+
+
+
+
 # EKS Concepts 
 
 **EKS Storage**
@@ -73,9 +106,6 @@ If having multiple cluster
   
 3. Amazon FSx for Lustre CSI driver: The FSx for Lustre Container Storage Interface (CSI) driver provides a CSI interface that allows Amazon EKS clusters to manage the lifecycle of FSx for Lustre file systems.
 
-4. 
-
-    
 
 
 
