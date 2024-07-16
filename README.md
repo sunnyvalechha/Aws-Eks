@@ -178,5 +178,10 @@ Deployments - A Deployment runs multiple replicas of your application and automa
 Service - A service is an abstraction for Pods, providing a stable so called virtual IP address. In simple terms service sits Infront of a Pod and acts as a load balancer.
 
 
+# Service
 
+We can expose an application running on a Pod using 3 types:
+1. Cluster IP - Default service, can access the IP within the cluster.
+2. NodePort - Expose the Port which required and access the application outside the cluster via Internet.
+3. Load Balancer - Specially for Cloud Providers like AWs 
 
