@@ -63,6 +63,10 @@ Check how many cluster available?
 
     eksctl get cluster
 
+Associate IAM OIDC provider to EKS cluster
+
+    eksctl utils associate-iam-oidc-provider --region us-east-1 --cluster sunny-eks-cluster --approve
+
 If having multiple cluster
 
     aws eks update-kubeconfig --name <cluster-name> --region us-east-1
