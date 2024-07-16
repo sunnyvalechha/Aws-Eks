@@ -103,6 +103,16 @@ Allow all traffic to remote security group
 
 ![image](https://github.com/user-attachments/assets/220a3a13-7d66-43dc-ad07-18df1b0c7801)
 
+Delete Cluster
+
+	eksctl get nodegroup --cluster sunny-eks-cluster  # Get nodegroup name
+
+	eksctl delete nodegroup --cluster=sunny-eks-cluster --name=sunny-eks-cluster-ng-public1
+
+ 	eksctl delete cluster sunny-eks-cluster
+
+ 	
+
 
  
 
