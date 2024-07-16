@@ -53,6 +53,10 @@ To Install EKS cluster
 
     eksctl create cluster --name sunny-eks-cluster --region us-east-1 --node-type t2.medium --nodes-min 2 --nodes-max 3
 
+Install without node group
+    
+    eksctl create cluster --name sunny-eks-cluster --region=us-east-1 --zones=us-east-1a,us-east-1b --without-nodegroup
+
 Note: To validate the EKS cluster installation > go to CloudFormation and check for Events
 
 Check how many cluster available?
