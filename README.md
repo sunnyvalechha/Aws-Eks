@@ -63,13 +63,33 @@ Check how many cluster available?
 
     eksctl get cluster
 
-Associate IAM OIDC provider to EKS cluster
+Associate IAM OIDC provider to EKS cluster, to use IAM roles with Service account this step is necessary when going forward.
 
     eksctl utils associate-iam-oidc-provider --region us-east-1 --cluster sunny-eks-cluster --approve
 
 If having multiple cluster
 
     aws eks update-kubeconfig --name <cluster-name> --region us-east-1
+
+Add nodes in the cluster
+
+# Create Public Node Group   
+	eksctl create nodegroup --cluster=sunny-eks-cluster \
+                       			--region=us-east-1 \
+                       			--name=sunny-eks-cluster-ng-public1 \
+                       			--node-type=t2.medium \
+                       			--nodes=2 \
+                       			--nodes-min=1 \
+                       			--nodes-max=2 \
+                       			--node-volume-size=10 \
+                       			--ssh-access \
+                       			--ssh-public-key=sunny-aws-key \
+                       			--managed \
+                       			--asg-access \
+                       			--external-dns-access \
+                       			--full-ecr-access \
+                       			--appmesh-access \
+                       			--alb-ingress-access 
 
 
 
