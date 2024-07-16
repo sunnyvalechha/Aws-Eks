@@ -91,6 +91,20 @@ Add nodes in the cluster
                        			--appmesh-access \
                        			--alb-ingress-access 
 
+Verify cluster creattion
+
+	eksctl get nodegroup --cluster sunny-eks-cluster
+
+ 	kubectl get nodes -o wide
+
+  	kubectl config view --minify
+
+Allow all traffic to remote security group
+
+![image](https://github.com/user-attachments/assets/220a3a13-7d66-43dc-ad07-18df1b0c7801)
+
+
+ 
 
 
 # Elastic Kubernetes Services Full Course
