@@ -170,9 +170,31 @@ We can expose an application running on a Pod using 3 types:
    	
        kubectl expose pod my-nginx --type=NodePort --port=80 --name=np-service		# Expose with NodePort, can access on Internet with <PublicIP>:<exposed-port>
 
-Output of 'get svc'
+Troubleshooting Pod
 
-my-nginx-svc-1   NodePort    10.110.42.121   <none>        82:32435/TCP   3s
+    kubectl exec -it nginx -- /bin/bash			# Go Inside the Pod
 
-public-ip:32435
+    kubectl logs nginx					# Get Pod logs
+    kubectl logs -f  nginx				# Running logs
+    kubectl exec -ti nginx ls				# Run command outside the pod
+    kubectl exec -ti nginx env
+    kubectl exec -ti nginx cat /usr/share/nginx/html/index.html
+    kubectl get pods nginx -o yaml			# Get yaml file of Pod 
+    kubectl get pods nginx -o yaml > nginx.yaml		# Re-direct content of yaml to another file
+    kubectl get svc my-nginx-svc -o yaml		# Get yaml file for service 
+    
+
+**Replicasets**
+
+* Replicaset is helps us to maintain a stable set of replica pods running at any given time.
+* If application crashes (any pod dies) replicaset will re-create the pod immediately to ensure the configured number of pods running at any given time.
+
+We can achive following things with the help of replica-sets:
+
+1. High Availability or Reliability
+2. Scaling
+3. Load Balancing
+4. Labels & Selectors
+
+Note: We don't have impative command (ad-hoc) to create a replica set. Must have to write yaml
 
