@@ -1,8 +1,12 @@
-Launch 1 Ec2 Instance
+**GitHub Repo:**
 
-Create 1 Iam User and assign policy of Adminstrator Access and Generate Access Keys for CLI Under Security Credentials.
+https://github.com/stacksimplify/aws-eks-kubernetes-masterclass
 
-Install AWS CLI
+* Launch 1 Ec2 Instance (t2.micro)
+* Create one Iam User
+* Assign policy of Adminstrator Access
+* Generate Access Keys & Secret Access Keys
+* Install AWS CLI
 
 Practical:-
       
@@ -21,8 +25,6 @@ To Validate the Aws CLI Installation
 To Connect User with Command Line Interface
 
     aws configure
-
-![image](https://github.com/sunnyvalechha/Aws-Eks-Cluster-Setup/assets/59471885/a1932aac-32f8-4598-8948-560b108f2abd)
 
 Install eksctl
 
@@ -112,22 +114,7 @@ Delete Cluster
  	eksctl delete cluster sunny-eks-cluster
 
  	
-
-
- 
-
-
-# Elastic Kubernetes Services Full Course
-
-**GitHub Repos:**
-
-https://github.com/stacksimplify/aws-eks-kubernetes-masterclass
-
-https://github.com/stacksimplify/docker-fundamentals
-
-https://github.com/stacksimplify/kubernetes-fundamentals
-
-**Aws EKS Cluster - CLI's**
+# Aws EKS Cluster - CLI's
 
 3 Types of CLI's
 
@@ -137,7 +124,7 @@ https://github.com/stacksimplify/kubernetes-fundamentals
             We can even create, autoscale and delete node groups.
             We can even create fargate profiles using eksctl
 
-**AWS EKS - Core Objects**
+# AWS EKS - Core Objects
 
 EKS Cluster has four major parts:
 
@@ -146,19 +133,7 @@ EKS Cluster has four major parts:
 3. Fargate Profiles (Serverless): Instead of Ec2 instance, we run our application workloads on Serverless Fargate profiles.
 4. VPC: With Vpc we follow secure networking standards which will allow us to run production workloads on EKS.
 
-
-
-
-
-
-
-
-
-
-
-# EKS Concepts 
-
-**EKS Storage**
+# EKS Storage
 
 1. EBS CSI Driver: The Amazon Elastic Block Store (Amazon EBS) Container Storage Interface (CSI) driver manages the lifecycle of Amazon EBS volumes as storage for the Kubernetes Volumes that you create. The Amazon EBS CSI driver makes Amazon EBS volumes for these types of Kubernetes volumes: generic ephemeral volumes and persistent volumes.
    
@@ -177,11 +152,10 @@ Deployments - A Deployment runs multiple replicas of your application and automa
 
 Service - A service is an abstraction for Pods, providing a stable so called virtual IP address. In simple terms service sits Infront of a Pod and acts as a load balancer.
 
-
 # Service
 
 We can expose an application running on a Pod using 3 types:
-1. Cluster IP - Default service, can access the IP within the cluster.
-2. NodePort - Expose the Port which required and access the application outside the cluster via Internet.
-3. Load Balancer - Specially for Cloud Providers like AWs 
+1. Cluster IP - Default service, can access the Pod IP only within the cluster.
+2. NodePort - Expose the Port of the application and access the application outside the cluster via Internet.
+3. Load Balancer - Specially for Cloud Providers like AWs, GCP
 
