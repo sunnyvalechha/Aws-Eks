@@ -156,6 +156,13 @@ Service - A service is an abstraction for Pods, providing a stable so called vir
 
 We can expose an application running on a Pod using 3 types:
 1. Cluster IP - Default service, can access the Pod IP only within the cluster.
-2. NodePort - Expose the Port of the application and access the application outside the cluster via Internet.
+2. NodePort - Expose the Port of the application and access the application outside the cluster via Internet (Port Range - 30,000 to 32,767)
 3. Load Balancer - Specially for Cloud Providers like AWs, GCP
 
+       kubectl run my-nginx --image=nginx
+       kubectl get pods -o wide
+       kubectl describe pod my-nginx
+       kubectl get services
+       kubectl expose pod my-nginx --type=NodePort --port=80 --name=np-service
+       curl 10.109.215.88	# This is working inside the cluster but wont work on Internet
+   
