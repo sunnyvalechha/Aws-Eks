@@ -163,6 +163,16 @@ We can expose an application running on a Pod using 3 types:
        kubectl get pods -o wide
        kubectl describe pod my-nginx
        kubectl get services
-       kubectl expose pod my-nginx --type=NodePort --port=80 --name=np-service
-       curl 10.109.215.88	# This is working inside the cluster but wont work on Internet
-   
+
+       kubectl expose pod nginx --type=ClusterIP --port=80 --name=my-nginx-svc		# Exposed with Cluster IP, cannot access outside the cluster
+
+       curl 10.109.215.88 
+   	
+       kubectl expose pod my-nginx --type=NodePort --port=80 --name=np-service		# Expose with NodePort, can access on Internet with <PublicIP>:<exposed-port>
+
+Output of 'get svc'
+
+my-nginx-svc-1   NodePort    10.110.42.121   <none>        82:32435/TCP   3s
+
+public-ip:32435
+
