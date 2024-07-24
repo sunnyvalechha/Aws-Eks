@@ -20,11 +20,11 @@ To Validate the Aws CLI Installation
 
      aws --version
 
-     aws s3 ls
-
 To Connect User with Command Line Interface
 
     aws configure
+
+    aws s3 ls		# To Validate the access
 
 Install eksctl
 
@@ -197,4 +197,39 @@ We can achive following things with the help of replica-sets:
 4. Labels & Selectors
 
 Note: We don't have impative command (ad-hoc) to create a replica set. Must have to write yaml
+
+vim replica-1.yaml
+
+	apiVersion: apps/v1
+	kind: ReplicaSet
+	metadata:
+	name: frontend
+	labels:
+		app: guestbook
+		tier: frontend
+	spec:
+	# modify replicas according to your case
+	replicas: 3
+	selector:
+		matchLabels:
+		tier: frontend
+	template:
+		metadata:
+		labels:
+			tier: frontend
+		spec:
+		containers:
+		- name: php-redis
+			image: us-docker.pkg.dev/google-samples/containers/gke/gb-frontend:v5
+
+
+	kubectl apply -f replica-1.yaml
+
+	kubectl get replicaset / rs
+
+**Expose replicaset as Service**
+
+Expose rs with Service NodePort to access the application externally (from Internet)
+
+	kubectl expose rs frontend --type=NodePort --port=80 --target-port=8080 --name=frontend
 
