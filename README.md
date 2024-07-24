@@ -233,3 +233,73 @@ Expose rs with Service NodePort to access the application externally (from Inter
 
 	kubectl expose rs frontend --type=NodePort --port=80 --target-port=8080 --name=frontend
 
+
+# Deployments
+
+1. Create a Deployment to rollout a Replicaset.
+2. Updating the Deployment.
+3. Rolling Back a Deployment.
+4. Scaling a Deployment.
+5. Pausing and Resuming a Deployment.
+6. Deployment Status
+7. Clean up Policy
+8. Canary Deployments
+
+Practical:
+
+kubectl create deployment <Deployment-name> --image=<Container-name>
+
+	kubectl create deployment nginx --image=nginx:1.14.2		# Imparative Way
+
+ 	kubectl scale --replicas=20 deployment nginx			# Imparative Way
+
+	apiVersion: apps/v1						# Declarative Way
+	kind: Deployment
+	metadata:
+	name: nginx-deployment
+	labels:
+		app: nginx
+	spec:
+	replicas: 3
+	selector:
+		matchLabels:
+		app: nginx
+	template:
+		metadata:
+		labels:
+			app: nginx
+		spec:
+		containers:
+		- name: nginx
+			image: nginx:1.14.2
+			ports:
+			- containerPort: 80
+
+**Expose Deployment as a Service**
+
+kubectl expose deployment <Deployment-Name> --type=NodePort --port=80 --target-port=80 --name=<Service-Name-Created>
+
+	kubectl expose deployment nginx --type=NodePort --port=80 --target-port=80 --name=my-dep-svc
+
+	kubectl get svc
+
+ **Update Deployments**
+
+ Deployments can be updated by 2 methods:
+
+ 1. Set Image
+ 2. Edit Deployments
+
+Updating Application version V1 to V2 using "Set Image" Option
+
+Note: Check the container name in spec > container > name and replace in kubectl set image command.
+
+	kubectl get deployments.apps nginx -o yaml
+
+![image](https://github.com/user-attachments/assets/0b2691de-b7c6-4609-9b28-c48c8308af62)
+
+	kubectl set image deployment nginx nginx=nginx:1.14.3		# Validate with describe, check in Image section
+
+ 	kubectl rollout status deployment nginx				# Rolling out all pods, Validate with 'get pods' command.
+
+  	kubectl get deployments.apps
