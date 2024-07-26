@@ -303,3 +303,19 @@ Note: Check the container name in spec > container > name and replace in kubectl
  	kubectl rollout status deployment nginx				# Rolling out all pods, Validate with 'get pods' command.
 
   	kubectl get deployments.apps
+
+**Update application using "Edit Deployment Version"**
+
+	kubectl edit deployments.apps nginx
+
+Version change from '1.14.2' to '1.14.3'
+
+	spec:
+      	  containers:
+      	    - image: nginx:1.14.3
+
+	kubectl rollout status deployment/nginx
+
+ 	kubectl rollout history deployment
+
+  	kubectl rollout history deployment nginx --revision=2		# Check by changing the revision numbers
