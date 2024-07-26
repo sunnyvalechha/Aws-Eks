@@ -319,3 +319,20 @@ Version change from '1.14.2' to '1.14.3'
  	kubectl rollout history deployment
 
   	kubectl rollout history deployment nginx --revision=2		# Check by changing the revision numbers
+
+   	kubectl rollout undo deployment nginx				# Undo the rollback, It will also increase the rollout history
+
+**Rollback to Specific version**
+
+	kubectl rollout undo deployment nginx --to-revision=3
+
+**Pause and Resume Deployment**
+
+* If we want to make multiple changes to our deployment, we can pause the deployment make changes and resume it again.
+
+      kubectl rollout pause deployment nginx
+
+Change the version using edit deployment command.
+
+	kubectl edit deployments.apps nginx
+
