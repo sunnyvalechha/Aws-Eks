@@ -332,7 +332,14 @@ Version change from '1.14.2' to '1.14.3'
 
       kubectl rollout pause deployment nginx
 
-Change the version using edit deployment command.
+* Change the version using edit deployment command.	
 
-	kubectl edit deployments.apps nginx
+      kubectl edit deployments.apps nginx	# We notice that not changes found after running the command, check with history command
+
+      kubectl set resources deployments/nginx -c=nginx --limits=cpu=20m, memory=30Mi
+
+* Resume deployment
+
+      kubectl resume rollout deployment nginx
+
 
