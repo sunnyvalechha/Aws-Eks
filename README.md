@@ -1,3 +1,11 @@
+EKS is a managed Kubernetes offering or a enterprise supported Kubernetes from AWS.
+
+There are 3 ways to use the Kubernetes on AWS
+
+1. Self Managed - Creating Control and Data plane all managed by ourself, any patching or any issue faced in any of the components are managed only by us.
+2. Eks 		- Control plane managed by Aws and Data managed by us.
+3. Fargate	- Everything managed by Aws. It is a serverless architecture.
+
 **GitHub Repo:**
 
 https://github.com/stacksimplify/aws-eks-kubernetes-masterclass
@@ -341,5 +349,8 @@ Version change from '1.14.2' to '1.14.3'
 * Resume deployment
 
       kubectl resume rollout deployment nginx
+
+# EKS Project
+
 
 
