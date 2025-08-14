@@ -29,9 +29,20 @@ To Connect User with Command Line Interface
 
     aws s3 ls		# To Validate the access
 
-Install eksctl
+Install or Update Kubectl (Linux amd64)
 
-    curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+	mkdir kubectlbinary;cd kubectlbinary
+	kubectl version --client
+	curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.32.7/2025-08-03/bin/linux/amd64/kubectl
+	chmod +x ./kubectl
+	mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
+	echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+	kubectl version --client
+
+Install eksctl
+	
+	curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.33.3/2025-08-03/bin/darwin/amd64/kubectl
+	chmod +x ./kubectl
     sudo mv /tmp/eksctl /usr/local/bin
 
     eksctl version
