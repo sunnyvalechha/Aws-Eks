@@ -1,14 +1,10 @@
 EKS is a managed Kubernetes offering or a enterprise supported Kubernetes from AWS.
 
-There are 3 ways to use the Kubernetes on AWS
+There are 3 ways to use the Kubernetes on AWS:
 
 1. Self Managed - Creating Control and Data plane all managed by ourself, any patching or any issue faced in any of the components are managed only by us.
 2. Eks 		- Control plane managed by Aws and Data managed by us.
 3. Fargate	- Everything managed by Aws. It is a serverless architecture.
-
-**GitHub Repo:**
-
-https://github.com/stacksimplify/aws-eks-kubernetes-masterclass
 
 * Launch 1 Ec2 Instance (t2.micro)
 * Create one Iam User
@@ -16,10 +12,9 @@ https://github.com/stacksimplify/aws-eks-kubernetes-masterclass
 * Generate Access Keys & Secret Access Keys
 * Install AWS CLI
 
-Practical:-
+**Practical:-**
       
      apt install unzip -y
-	    
      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
      unzip awscliv2.zip
      sudo ./aws/install
