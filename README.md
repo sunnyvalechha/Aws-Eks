@@ -6,32 +6,33 @@ There are 3 ways to use the Kubernetes on AWS:
 2. Eks 		- Control plane managed by Aws and Data managed by us.
 3. Fargate	- Everything managed by Aws. It is a serverless architecture.
 
-* Launch 1 Ec2 Instance (t2.micro)
-* Create one Iam User
-* Assign policy of Adminstrator Access
-* Generate Access Keys & Secret Access Keys
-* Install AWS CLI
+
 
 **Practical:-**
+
+* Launch 1 Ec2 Instance (t2.micro)
+* Create a Iam User
+* Assign policy of Adminstrator Access to the user
+* Generate Access Keys & Secret Access Keys
+* Install AWS CLI on the instance (usually pre-installed on the instance)
       
-     apt install unzip -y
-     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-     unzip awscliv2.zip
-     sudo ./aws/install
-     
-To Validate the Aws CLI Installation
+Install Aws cli if not installed:
 
-     aws --version
+	apt install unzip -y
+	curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+	unzip awscliv2.zip
+	sudo ./aws/install
+	aws --version
 
-To Connect User with Command Line Interface
+Connect User with Aws CLI:
 
-    aws configure
-
+	aws configure
     aws s3 ls		# To Validate the access
 
-Install or Update Kubectl (Linux amd64)
+Install or Update Kubectl (Linux amd64):
 
-	mkdir kubectlbinary;cd kubectlbinary
+	uname -m	# x86_64
+ 	mkdir kubectlbinary;cd kubectlbinary
 	kubectl version --client
 	curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.32.7/2025-08-03/bin/linux/amd64/kubectl
 	chmod +x ./kubectl
