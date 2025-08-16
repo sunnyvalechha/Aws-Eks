@@ -105,6 +105,8 @@ If having multiple cluster
 		                       			--alb-ingress-access \
 		  								--verbose=3
 
+Delete Cluster & Nodegroups
+
 		aws cloudformation describe-stacks   --region ap-south-1   --query "Stacks[?contains(StackName, 'sunny-eks-cluster-ng-public1')].StackName"
 
 		aws cloudformation delete-stack --stack-name eksctl-sunny-eks-cluster-nodegroup-sunny-eks-cluster-ng-public1 --region ap-south-1		# if any issues creation of nodes & deletion will take time
@@ -115,6 +117,12 @@ If having multiple cluster
 		  --query 'StackEvents[?ResourceStatus==`CREATE_FAILED`].{Resource:LogicalResourceId, Reason:ResourceStatusReason}' \
 		  --output table		# this will the logs from cloudformation
 
+	eksctl get nodegroup --cluster sunny-eks-cluster  # Get nodegroup name
+
+	eksctl delete nodegroup --cluster=sunny-eks-cluster --name=sunny-eks-cluster-ng-public1
+
+ 	eksctl delete cluster sunny-eks-cluster
+
 Verify cluster:
 
 	eksctl get nodegroup --cluster sunny-eks-cluster
@@ -123,17 +131,7 @@ Verify cluster:
 
   	kubectl config view --minify
 
-Allow all traffic to remote security group
 
-![image](https://github.com/user-attachments/assets/220a3a13-7d66-43dc-ad07-18df1b0c7801)
-
-Delete Cluster
-
-	eksctl get nodegroup --cluster sunny-eks-cluster  # Get nodegroup name
-
-	eksctl delete nodegroup --cluster=sunny-eks-cluster --name=sunny-eks-cluster-ng-public1
-
- 	eksctl delete cluster sunny-eks-cluster
 
  	
 # Aws EKS Cluster - CLI's
