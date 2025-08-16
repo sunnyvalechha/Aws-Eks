@@ -88,33 +88,32 @@ If having multiple cluster
 
 * Create Node Group with additional Add-Ons in Public Subnets. These add-ons will create the respective IAM policies for us automatically within our Node Group role.
 
+		eksctl create nodegroup --cluster=sunny-eks-cluster \
+		                       			--region=ap-south-1 \
+		                       			--name=sunny-eks-cluster-ng-public1 \
+		                       			--node-type=t2.medium \
+		                       			--nodes=1 \
+		                       			--nodes-min=1 \
+		                       			--nodes-max=1 \
+		                       			--node-volume-size=20 \
+		                       			--ssh-access \
+		                       			--ssh-public-key=awskey-1 \
+		                       			--asg-access \
+		                       			--external-dns-access \
+		                       			--full-ecr-access \
+		                       			--appmesh-access \
+		                       			--alb-ingress-access \
+		  								--verbose=3
 
-	eksctl create nodegroup --cluster=sunny-eks-cluster \
-                       			--region=ap-south-1 \
-                       			--name=sunny-eks-cluster-ng-public1 \
-                       			--node-type=t2.medium \
-                       			--nodes=1 \
-                       			--nodes-min=1 \
-                       			--nodes-max=1 \
-                       			--node-volume-size=20 \
-                       			--ssh-access \
-                       			--ssh-public-key=awskey-1 \
-                       			--asg-access \
-                       			--external-dns-access \
-                       			--full-ecr-access \
-                       			--appmesh-access \
-                       			--alb-ingress-access \
-  								--verbose=4
+		aws cloudformation describe-stacks   --region ap-south-1   --query "Stacks[?contains(StackName, 'sunny-eks-cluster-ng-public1')].StackName"
 
-	aws cloudformation describe-stacks   --region ap-south-1   --query "Stacks[?contains(StackName, 'sunny-eks-cluster-ng-public1')].StackName"
+		aws cloudformation delete-stack --stack-name eksctl-sunny-eks-cluster-nodegroup-sunny-eks-cluster-ng-public1 --region ap-south-1		# if any issues creation of nodes & deletion will take time
 
-	aws cloudformation delete-stack --stack-name eksctl-sunny-eks-cluster-nodegroup-sunny-eks-cluster-ng-public1 --region ap-south-1		# if any issues creation of nodes & deletion will take time
-
-	aws cloudformation describe-stack-events \
-  --stack-name eksctl-sunny-eks-cluster-nodegroup-sunny-eks-cluster-ng-public1 \
-  --region ap-south-1 \
-  --query 'StackEvents[?ResourceStatus==`CREATE_FAILED`].{Resource:LogicalResourceId, Reason:ResourceStatusReason}' \
-  --output table		# this will the logs from cloudformation
+			aws cloudformation describe-stack-events \
+		  --stack-name eksctl-sunny-eks-cluster-nodegroup-sunny-eks-cluster-ng-public1 \
+		  --region ap-south-1 \
+		  --query 'StackEvents[?ResourceStatus==`CREATE_FAILED`].{Resource:LogicalResourceId, Reason:ResourceStatusReason}' \
+		  --output table		# this will the logs from cloudformation
 
 Verify cluster:
 
