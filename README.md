@@ -60,15 +60,15 @@ Setup EKS cluster:
 * It will take 15-20 minutes to create the Cluster Control Plane
 
 	eksctl create cluster --name=sunny-eks-cluster \
-                      --region=ap-south-1 \
-                      --zones=ap-south-1a,ap-south-1b \
-                      --without-nodegroup
+	                      --region=ap-south-1 \
+	                      --zones=ap-south-1a,ap-south-1b \
+	                      --without-nodegroup
 
 	eksctl get cluster
 
 * Installation with specifying nodes:
 
-    eksctl create cluster --name sunny-eks-cluster --region=ap-south-1 --node-type t2.medium --nodes-min 1 --nodes-max 2
+	eksctl create cluster --name sunny-eks-cluster --region=ap-south-1 --node-type t2.medium --nodes-min 1 --nodes-max 2
 
 Note: To validate the EKS cluster installation > go to CloudFormation and check for Events
 
