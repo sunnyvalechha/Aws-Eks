@@ -66,6 +66,8 @@ Setup EKS cluster:
 
 		eksctl get cluster
 
+  		eksctl delete cluster sunny-eks-cluster
+
 * Installation with specifying nodes:
 
 		eksctl create cluster --name sunny-eks-cluster --region=ap-south-1 --node-type t2.medium --nodes-min 1 --nodes-max 2
@@ -84,27 +86,37 @@ If having multiple cluster
 
     aws eks update-kubeconfig --name <cluster-name> --region us-east-1
 
-Add nodes in the cluster
+* Create Node Group with additional Add-Ons in Public Subnets. These add-ons will create the respective IAM policies for us automatically within our Node Group role.
 
-# Create Public Node Group   
+
 	eksctl create nodegroup --cluster=sunny-eks-cluster \
-                       			--region=us-east-1 \
+                       			--region=ap-south-1 \
                        			--name=sunny-eks-cluster-ng-public1 \
                        			--node-type=t2.medium \
-                       			--nodes=2 \
+                       			--nodes=1 \
                        			--nodes-min=1 \
-                       			--nodes-max=2 \
-                       			--node-volume-size=10 \
+                       			--nodes-max=1 \
+                       			--node-volume-size=20 \
                        			--ssh-access \
-                       			--ssh-public-key=sunny-aws-key \
-                       			--managed \
+                       			--ssh-public-key=awskey-1 \
                        			--asg-access \
                        			--external-dns-access \
                        			--full-ecr-access \
                        			--appmesh-access \
-                       			--alb-ingress-access 
+                       			--alb-ingress-access \
+  								--verbose=4
 
-Verify cluster creattion
+	aws cloudformation describe-stacks   --region ap-south-1   --query "Stacks[?contains(StackName, 'sunny-eks-cluster-ng-public1')].StackName"
+
+	aws cloudformation delete-stack --stack-name eksctl-sunny-eks-cluster-nodegroup-sunny-eks-cluster-ng-public1 --region ap-south-1		# if any issues creation of nodes & deletion will take time
+
+	aws cloudformation describe-stack-events \
+  --stack-name eksctl-sunny-eks-cluster-nodegroup-sunny-eks-cluster-ng-public1 \
+  --region ap-south-1 \
+  --query 'StackEvents[?ResourceStatus==`CREATE_FAILED`].{Resource:LogicalResourceId, Reason:ResourceStatusReason}' \
+  --output table		# this will the logs from cloudformation
+
+Verify cluster:
 
 	eksctl get nodegroup --cluster sunny-eks-cluster
 
