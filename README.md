@@ -40,7 +40,7 @@ Install or Update Kubectl (Linux amd64): https://docs.aws.amazon.com/eks/latest/
 	echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
 	kubectl version --client
 
-Install eksctl: https://docs.aws.amazon.com/eks/latest/userguide/setting-up.html#installing-eksctl
+Install eksctl cli: https://eksctl.io/installation/ | https://docs.aws.amazon.com/eks/latest/eksctl/what-is-eksctl.html
 
 	vi eks.sh
 
@@ -55,23 +55,30 @@ Install eksctl: https://docs.aws.amazon.com/eks/latest/userguide/setting-up.html
 	
     eksctl version
 
-Setup EKS cluster 
+Setup EKS cluster:
 
-    eksctl create cluster --name sunny-eks-cluster --region us-east-1 --node-type t2.medium --nodes-min 2 --nodes-max 3
+* It will take 15-20 minutes to create the Cluster Control Plane
 
-Install without node group
-    
-    eksctl create cluster --name sunny-eks-cluster --region=us-east-1 --zones=us-east-1a,us-east-1b --without-nodegroup
+	eksctl create cluster --name=sunny-eks-cluster \
+                      --region=ap-south-1 \
+                      --zones=ap-south-1a,ap-south-1b \
+                      --without-nodegroup
+
+	eksctl get cluster
+
+* Installation with specifying nodes:
+
+    eksctl create cluster --name sunny-eks-cluster --region=ap-south-1 --node-type t2.medium --nodes-min 1 --nodes-max 2
 
 Note: To validate the EKS cluster installation > go to CloudFormation and check for Events
 
-Check how many cluster available?
+IAM OIDC provider:
 
-    eksctl get cluster
+* To enable and use IAM roles with Kubernetes service account on EKS cluster we must create and associate OIDC identity provider.
+* An IAM OpenID Connect (OIDC) provider in AWS (or other cloud providers) is an authentication protocol built on top of OAuth 2.0 that allows users to authenticate with one service and use those credentials to access other services. An OIDC provider (like Google, Facebook, or a custom IdP) is responsible for verifying user identities and issuing tokens.
+* IAM OIDC providers in AWS are used to create a trust relationship. This means you're essentially telling AWS, "I trust this particular OIDC provider to authenticate users, and when they present a valid token from that provider, I'll grant them access to certain AWS resources".
 
-Associate IAM OIDC provider to EKS cluster, to use IAM roles with Service account this step is necessary when going forward.
-
-    eksctl utils associate-iam-oidc-provider --region us-east-1 --cluster sunny-eks-cluster --approve
+    eksctl utils associate-iam-oidc-provider --region=ap-south-1 --cluster sunny-eks-cluster --approve
 
 If having multiple cluster
 
