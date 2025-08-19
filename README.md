@@ -1,12 +1,17 @@
 EKS is a managed Kubernetes offering or a enterprise supported Kubernetes from AWS.
 
+* AWS EKS - EKS Cluster has four major parts:
+
+1. EKS Control Plane: Contains Kubernetes master components like etcd, kube-apiserver, kube-controller. It is managed service by AWS.
+2. Worker Nodes & Node Groups: Group of EC2 instance where we run our application workloads.
+3. Fargate Profiles (Serverless): Instead of Ec2 instance, we run our application workloads on Serverless Fargate profiles.
+4. VPC: With Vpc we follow secure networking standards which will allow us to run production workloads on EKS.
+
 There are 3 ways to use the Kubernetes on AWS:
 
 1. Self Managed - Creating Control and Data plane all managed by ourself, any patching or any issue faced in any of the components are managed only by us.
 2. Eks 		- Control plane managed by Aws and Data managed by us.
 3. Fargate	- Everything managed by Aws. It is a serverless architecture.
-
-
 
 **Practical:-**
 
@@ -131,35 +136,102 @@ Verify cluster:
 
   	kubectl config view --minify
 
-
-
- 	
-# Aws EKS Cluster - CLI's
-
-3 Types of CLI's
-
-1. AWS CLI - We can control multiple AWS services from the command line and automate them through scripts.
-2. kubectl - We can control kubernetes clusters and objects using kubectl
-3. eksctl - Used for creating & deleting clusters on Aws EKS.
-            We can even create, autoscale and delete node groups.
-            We can even create fargate profiles using eksctl
-
-# AWS EKS - Core Objects
-
-EKS Cluster has four major parts:
-
-1. EKS Control Plane: Contains Kubernetes master components like etcd, kube-apiserver, kube-controller. It is managed service by AWS.
-2. Worker Nodes & Node Groups: Group of EC2 instance where we run our application workloads.
-3. Fargate Profiles (Serverless): Instead of Ec2 instance, we run our application workloads on Serverless Fargate profiles.
-4. VPC: With Vpc we follow secure networking standards which will allow us to run production workloads on EKS.
-
-# EKS Storage
+# EKS Storage with Elastic block storage (EBS)
 
 1. EBS CSI Driver: The Amazon Elastic Block Store (Amazon EBS) Container Storage Interface (CSI) driver manages the lifecycle of Amazon EBS volumes as storage for the Kubernetes Volumes that you create. The Amazon EBS CSI driver makes Amazon EBS volumes for these types of Kubernetes volumes: generic ephemeral volumes and persistent volumes.
    
 2. EFS CSI Driver: Amazon Elastic File System (Amazon EFS) provides serverless, fully elastic file storage so that you can share file data without provisioning or managing storage capacity and performance. The Amazon EFS Container Storage Interface (CSI) driver provides a CSI interface that allows Kubernetes clusters running on AWS to manage the lifecycle of Amazon EFS file systems.
   
 3. Amazon FSx for Lustre CSI driver: The FSx for Lustre Container Storage Interface (CSI) driver provides a CSI interface that allows Amazon EKS clusters to manage the lifecycle of FSx for Lustre file systems.
+
+* Go to IAM & create new policy named Amazon_EKS_sunny_CBI_Driver
+
+
+		{
+		  "Version": "2012-10-17",
+		  "Statement": [
+		    {
+		      "Effect": "Allow",
+		      "Action": [
+		        "ec2:AttachVolume",
+		        "ec2:CreateSnapshot",
+		        "ec2:CreateTags",
+		        "ec2:CreateVolume",
+		        "ec2:DeleteSnapshot",
+		        "ec2:DeleteTags",
+		        "ec2:DeleteVolume",
+		        "ec2:DescribeInstances",
+		        "ec2:DescribeSnapshots",
+		        "ec2:DescribeTags",
+		        "ec2:DescribeVolumes",
+		        "ec2:DetachVolume"
+		      ],
+		      "Resource": "*"
+		    }
+		  ]
+		}
+
+		kubectl describe configmap aws-auth -n kube-system
+
+* Get a role, copy rolearn (eksctl-sunny-eks-cluster-nodegroup-NodeInstanceRole-Nj0ZJ32vJcpJ) search this in a IAM **Role**
+* In the selected role, go to add permissions, attach policy (Amazon_EKS_sunny_CBI_Driver)
+
+- Other way to finding a role attached with the worker node is from the EC2 dashboard under IAM section
+
+<img width="1040" height="313" alt="image" src="https://github.com/user-attachments/assets/a094e586-cd37-465f-9b81-c25af58c2d83" />
+
+		kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=master"
+		kubectl get all -n kube-system
+		kubectl get deploy -n kube-system
+
+* Creating mysql database with persistent storage using Aws Ebs volume
+
+		sudo vim ~/.vimrc --> set ai ts=2 cursorcolumn et	# set indentation
+		vim storage.yml
+
+		apiVersion: storage.k8s.io/v1
+		kind: StorageClass
+		metadata:
+		  name: ebs-sc
+		provisioner: ebs.csi.aws.com
+		volumeBindingMode: WaitForFirstConsumer
+
+* In Amazon EKS, **ebs.csi.aws.com** is the provisioner used by the Amazon EBS CSI (Container Storage Interface) driver. This driver handles the dynamic provisioning of Amazon EBS volumes for use with Kubernetes workloads running on EKS.
+* When a PVC is created with a StorageClass configured with **volumeBindingMode: WaitForFirstConsumer**, the PVC will remain in a "Pending" state, even if the underlying storage class is configured to provision volumes dynamically.
+
+		vim pvc.yml
+
+		apiVersion: v1
+		kind: PersistentVolumeClaim
+		metadata:
+		  name: ebs-mysql-pv-claim
+		spec:
+		  accessModes:
+		    - ReadWriteOnce
+		  storageClassName: ebs-sc
+		  resources:
+		    requests:
+		      storage: 4Gi
+
+
+		vim configmap.yml
+
+		apiVersion: v1
+		kind: ConfigMap
+		metadata:
+		  name: usermanagement-dbcreation-script
+		data:
+		  mysql_usermgmt.sql: |-
+		    DROP DATABASE IF EXIST usermgmt;
+		    CREATE DATABASE usermgmt;
+
+		mkdir kube-manifest
+		mv storage.yml pvc.yml configmap.yml kube-manifest
+		kubectl apply -f kube-manifest
+		kubectl get pvc		# It will be in pending state
+		
+
+
 
 
 # Kubernetes Fundamentals
