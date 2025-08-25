@@ -32,7 +32,7 @@ Install Aws cli if not installed:
 Connect User with Aws CLI:
 
 	aws configure
-    aws s3 ls		# To Validate the access
+    aws s3 ls							# To Validate the access
 
 Install or Update Kubectl (Linux amd64): https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html
 
@@ -122,7 +122,7 @@ Delete Cluster & Nodegroups
 		  --query 'StackEvents[?ResourceStatus==`CREATE_FAILED`].{Resource:LogicalResourceId, Reason:ResourceStatusReason}' \
 		  --output table		# this will the logs from cloudformation
 
-	eksctl get nodegroup --cluster sunny-eks-cluster  # Get nodegroup name
+	eksctl get nodegroup --cluster sunny-eks-cluster  			# Get nodegroup name
 
 	eksctl delete nodegroup --cluster=sunny-eks-cluster --name=sunny-eks-cluster-ng-public1
 
@@ -186,7 +186,7 @@ Verify cluster:
 
 * Creating mysql database with persistent storage using Aws Ebs volume
 
-		sudo vim ~/.vimrc --> set ai ts=2 cursorcolumn et	# set indentation
+		sudo vim ~/.vimrc --> set ai ts=2 cursorcolumn et				# set indentation
 		vim storage.yml
 
 		apiVersion: storage.k8s.io/v1
@@ -264,16 +264,16 @@ We can expose an application running on a Pod using 3 types:
 
 Troubleshooting Pod
 
-    kubectl exec -it nginx -- /bin/bash			# Go Inside the Pod
+    kubectl exec -it nginx -- /bin/bash				# Go Inside the Pod
 
-    kubectl logs nginx					# Get Pod logs
-    kubectl logs -f  nginx				# Running logs
-    kubectl exec -ti nginx ls				# Run command outside the pod
+    kubectl logs nginx								# Get Pod logs
+    kubectl logs -f  nginx							# Running logs
+    kubectl exec -ti nginx ls						# Run command outside the pod
     kubectl exec -ti nginx env
     kubectl exec -ti nginx cat /usr/share/nginx/html/index.html
-    kubectl get pods nginx -o yaml			# Get yaml file of Pod 
+    kubectl get pods nginx -o yaml					# Get yaml file of Pod 
     kubectl get pods nginx -o yaml > nginx.yaml		# Re-direct content of yaml to another file
-    kubectl get svc my-nginx-svc -o yaml		# Get yaml file for service 
+    kubectl get svc my-nginx-svc -o yaml			# Get yaml file for service 
     
 
 **Replicasets**
@@ -343,9 +343,9 @@ kubectl create deployment <Deployment-name> --image=<Container-name>
 
 	kubectl create deployment nginx --image=nginx:1.14.2		# Imparative Way
 
- 	kubectl scale --replicas=20 deployment nginx			# Imparative Way
+ 	kubectl scale --replicas=20 deployment nginx				# Imparative Way
 
-	apiVersion: apps/v1						# Declarative Way
+	apiVersion: apps/v1											# Declarative Way
 	kind: Deployment
 	metadata:
 	name: nginx-deployment
@@ -392,7 +392,7 @@ Note: Check the container name in spec > container > name and replace in kubectl
 
 	kubectl set image deployment nginx nginx=nginx:1.14.3		# Validate with describe, check in Image section
 
- 	kubectl rollout status deployment nginx				# Rolling out all pods, Validate with 'get pods' command.
+ 	kubectl rollout status deployment nginx						# Rolling out all pods, Validate with 'get pods' command.
 
   	kubectl get deployments.apps
 
@@ -412,7 +412,7 @@ Version change from '1.14.2' to '1.14.3'
 
   	kubectl rollout history deployment nginx --revision=2		# Check by changing the revision numbers
 
-   	kubectl rollout undo deployment nginx				# Undo the rollback, It will also increase the rollout history
+   	kubectl rollout undo deployment nginx						# Undo the rollback, It will also increase the rollout history
 
 **Rollback to Specific version**
 
@@ -426,7 +426,7 @@ Version change from '1.14.2' to '1.14.3'
 
 * Change the version using edit deployment command.	
 
-      kubectl edit deployments.apps nginx	# We notice that not changes found after running the command, check with history command
+      kubectl edit deployments.apps nginx											# We notice that not changes found after running the command, check with history command
 
       kubectl set resources deployments/nginx -c=nginx --limits=cpu=20m, memory=30Mi
 
