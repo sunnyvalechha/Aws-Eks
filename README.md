@@ -232,6 +232,46 @@ Verify cluster:
 		mv storage.yml pvc.yml configmap.yml kube-manifest
 		kubectl apply -f kube-manifest
 		kubectl get pvc		# It will be in pending state
+
+
+  apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5.6
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            values: dbpassword11
+          ports:
+          - containerPort: 3306
+            name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+            - name: usermanagement-dbcreation-script
+              mountPath: /docker-entrypoint-initdb.d
+
+      volumes:
+        - name: mysql-persistent-storage
+          persistent-volume-claim:
+            claimName: ebs-mysql-pv-claim
+        - name: usermanagement-dbcreation-script
+          configMap:
+            name: usermanagement-dbcreation-script
 		
 
 
