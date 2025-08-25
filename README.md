@@ -85,7 +85,7 @@ IAM OIDC provider:
 * An IAM OpenID Connect (OIDC) provider in AWS (or other cloud providers) is an authentication protocol built on top of OAuth 2.0 that allows users to authenticate with one service and use those credentials to access other services. An OIDC provider (like Google, Facebook, or a custom IdP) is responsible for verifying user identities and issuing tokens.
 * IAM OIDC providers in AWS are used to create a trust relationship. This means you're essentially telling AWS, "I trust this particular OIDC provider to authenticate users, and when they present a valid token from that provider, I'll grant them access to certain AWS resources".
 
-	eksctl utils associate-iam-oidc-provider --region=ap-south-1 --cluster sunny-eks-cluster --approve
+		eksctl utils associate-iam-oidc-provider --region=ap-south-1 --cluster sunny-eks-cluster --approve
 
 If having multiple cluster
 
