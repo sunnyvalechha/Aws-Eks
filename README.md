@@ -173,15 +173,18 @@ Verify cluster:
 
 		kubectl describe configmap aws-auth -n kube-system
 
-* Get a role, copy rolearn (eksctl-sunny-eks-cluster-nodegroup-NodeInstanceRole-Nj0ZJ32vJcpJ) search this in a IAM **Role**
+* Get a role, copy rolearn (**eksctl-sunny-eks-cluster-nodegroup-NodeInstanceRole-Nj0ZJ32vJcpJ**) search <-- this in a IAM **Role**
 * In the selected role, go to add permissions, attach policy (Amazon_EKS_sunny_CBI_Driver)
 
 - Other way to finding a role attached with the worker node is from the EC2 dashboard under IAM section
 
 <img width="1040" height="313" alt="image" src="https://github.com/user-attachments/assets/a094e586-cd37-465f-9b81-c25af58c2d83" />
 
-		kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=master"
-		kubectl get all -n kube-system
+		kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=master"		# It might show some error at last
+		kubectl get pods -n kube-system			# look for csi controller and node
+
+<img width="807" height="65" alt="image" src="https://github.com/user-attachments/assets/7a209f84-3f7f-4eac-a926-7477bd3b7b02" />
+
 		kubectl get deploy -n kube-system
 
 * Creating mysql database with persistent storage using Aws Ebs volume
