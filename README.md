@@ -15,7 +15,7 @@ There are 3 ways to use the Kubernetes on AWS:
 
 **Practical:-**
 
-* Launch 1 Ec2 Instance (t2.micro)
+* Launch 1 Ubuntu Ec2 Instance (t2.micro)
 * Create a Iam User
 * Assign policy of Adminstrator Access to the user
 * Generate Access Keys & Secret Access Keys
@@ -35,6 +35,8 @@ Connect User with Aws CLI:
     aws s3 ls							# To Validate the access
 
 Install or Update Kubectl (Linux amd64): https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html
+
+	vi kubectl.sh
 
 	uname -m	# x86_64
  	mkdir kubectlbinary;cd kubectlbinary
