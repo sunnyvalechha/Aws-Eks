@@ -38,15 +38,19 @@ Install or Update Kubectl (Linux amd64): https://docs.aws.amazon.com/eks/latest/
 
 	vi kubectl.sh
 
-	uname -m	# x86_64
- 	mkdir kubectlbinary;cd kubectlbinary
-	kubectl version --client
+	#!/bin/bash
+	set -e
+	uname -m  # Should print x86_64
+	mkdir -p kubectlbinary && cd kubectlbinary
 	curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.33.5/2025-09-19/bin/linux/amd64/kubectl
 	chmod +x ./kubectl
-	mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
-	echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
-	source ~/.bashrc
+	mkdir -p $HOME/bin
+	cp ./kubectl $HOME/bin/kubectl
+	export PATH=$HOME/bin:$PATH
+	grep -qxF 'export PATH=$HOME/bin:$PATH' ~/.bashrc || echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
 	kubectl version --client
+
+	source ~/.bashrc
 
 Install eksctl cli: https://eksctl.io/installation/ | https://docs.aws.amazon.com/eks/latest/eksctl/what-is-eksctl.html
 
