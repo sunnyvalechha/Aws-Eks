@@ -50,6 +50,8 @@ Install or Update Kubectl (Linux amd64): https://docs.aws.amazon.com/eks/latest/
 	grep -qxF 'export PATH=$HOME/bin:$PATH' ~/.bashrc || echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
 	kubectl version --client
 
+Note: Run the below source command separately after running the above script
+
 	source ~/.bashrc
 
 Install eksctl cli: https://eksctl.io/installation/ | https://docs.aws.amazon.com/eks/latest/eksctl/what-is-eksctl.html
