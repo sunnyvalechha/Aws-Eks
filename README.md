@@ -1,6 +1,6 @@
-EKS is a managed Kubernetes offering or a enterprise supported Kubernetes from AWS.
+**EKS** is a managed Kubernetes offering or a enterprise supported Kubernetes from AWS.
 
-* AWS EKS - EKS Cluster has four major parts:
+EKS Cluster has four major parts:
 
 1. EKS Control Plane: Contains Kubernetes master components like etcd, kube-apiserver, kube-controller. It is managed service by AWS.
 2. Worker Nodes & Node Groups: Group of EC2 instance where we run our application workloads.
@@ -10,10 +10,10 @@ EKS is a managed Kubernetes offering or a enterprise supported Kubernetes from A
 There are 3 ways to use the Kubernetes on AWS:
 
 1. Self Managed - Creating Control and Data plane all managed by ourself, any patching or any issue faced in any of the components are managed only by us.
-2. Eks 		- Control plane managed by Aws and Data managed by us.
-3. Fargate	- Everything managed by Aws. It is a serverless architecture.
+2. Eks - Control plane managed by Aws and Data plane managed by us.
+3. Fargate - Everything managed by Aws. It is a serverless architecture.
 
-**Practical:-**
+Eks Cluster Setup:
 
 * Launch 1 Ubuntu Ec2 Instance (t2.micro)
 * Create a Iam User
