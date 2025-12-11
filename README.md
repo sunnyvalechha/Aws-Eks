@@ -66,41 +66,28 @@ Install eksctl cli: https://eksctl.io/installation/ | https://docs.aws.amazon.co
 	curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" | grep $PLATFORM | sha256sum --check
 	tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
 	sudo install -m 0755 /tmp/eksctl /usr/local/bin && rm /tmp/eksctl
-	
     eksctl version
 
-Setup EKS cluster:
+**Setup EKS cluster**:
 
 * It will take 15-20 minutes to create the Cluster Control Plane
 
-		eksctl create cluster --name=sunny-eks-cluster \
+		eksctl create cluster --name=sunny-eks \
 		                      --region=ap-south-1 \
 		                      --zones=ap-south-1a,ap-south-1b \
 		                      --without-nodegroup
 
 		eksctl get cluster
 
-  		eksctl delete cluster sunny-eks-cluster
+  		eksctl delete cluster sunny-eks
 
-* Installation with specifying nodes:
+Note: Nodegroups is a collection of EC2 instances (worker nodes) that provide compute power for your Kubernetes workloads.
 
-		eksctl create cluster --name sunny-eks-cluster --region=ap-south-1 --node-type t2.medium --nodes-min 1 --nodes-max 2
+**Installation with specifying nodes**:
 
-Note: To validate the EKS cluster installation > go to CloudFormation and check for Events
+		eksctl create cluster --name sunny-eks --region=ap-south-1 --node-type t2.medium --nodes-min 1 --nodes-max 2
 
-IAM OIDC provider:
-
-* To enable and use IAM roles with Kubernetes service account on EKS cluster we must create and associate OIDC identity provider.
-* An IAM OpenID Connect (OIDC) provider in AWS (or other cloud providers) is an authentication protocol built on top of OAuth 2.0 that allows users to authenticate with one service and use those credentials to access other services. An OIDC provider (like Google, Facebook, or a custom IdP) is responsible for verifying user identities and issuing tokens.
-* IAM OIDC providers in AWS are used to create a trust relationship. This means you're essentially telling AWS, "I trust this particular OIDC provider to authenticate users, and when they present a valid token from that provider, I'll grant them access to certain AWS resources".
-
-		eksctl utils associate-iam-oidc-provider --region=ap-south-1 --cluster sunny-eks-cluster --approve
-
-If having multiple cluster
-
-    aws eks update-kubeconfig --name <cluster-name> --region us-east-1
-
-* Create Node Group with additional Add-Ons in Public Subnets. These add-ons will create the respective IAM policies for us automatically within our Node Group role.
+**Create Node Group with additional Add-Ons** in Public Subnets. These add-ons will create the respective IAM policies for us automatically within our Node Group role.
 
 		eksctl create nodegroup --cluster=sunny-eks-cluster \
 		                       			--region=ap-south-1 \
@@ -118,6 +105,20 @@ If having multiple cluster
 		                       			--appmesh-access \
 		                       			--alb-ingress-access \
 		  								--verbose=3
+
+Note: To validate the EKS cluster installation > go to CloudFormation and check for Events
+
+**IAM OIDC provider**:
+
+* To enable and use IAM roles with Kubernetes service account on EKS cluster we must create and associate OIDC identity provider.
+* An IAM OpenID Connect (OIDC) provider in AWS (or other cloud providers) is an authentication protocol built on top of OAuth 2.0 that allows users to authenticate with one service and use those credentials to access other services. An OIDC provider (like Google, Facebook, or a custom IdP) is responsible for verifying user identities and issuing tokens.
+* IAM OIDC providers in AWS are used to create a trust relationship. This means you're essentially telling AWS, "I trust this particular OIDC provider to authenticate users, and when they present a valid token from that provider, I'll grant them access to certain AWS resources".
+
+		eksctl utils associate-iam-oidc-provider --region=ap-south-1 --cluster sunny-eks-cluster --approve
+
+If having multiple cluster
+
+    aws eks update-kubeconfig --name <cluster-name> --region us-east-1
 
 Delete Cluster & Nodegroups
 
