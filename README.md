@@ -120,6 +120,8 @@ If having multiple cluster
 
     aws eks update-kubeconfig --name <cluster-name> --region us-east-1
 
+	eksctl upgrade cluster --name sunny-eks --region ap-south-1 --version 1.33 --approve
+
 Delete Cluster & Nodegroups
 
 		aws cloudformation describe-stacks   --region ap-south-1   --query "Stacks[?contains(StackName, 'sunny-eks-cluster-ng-public1')].StackName"
