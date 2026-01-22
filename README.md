@@ -492,4 +492,6 @@ Version change from '1.14.2' to '1.14.3'
 # EKS Project
 
 
+# CloudWatch container Insights and Log Insights
+
 
